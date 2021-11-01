@@ -38,9 +38,18 @@ namespace NotePad_Project
            
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SaveFileDialog saveFile1 = new SaveFileDialog();
+            saveFile1.DefaultExt = "*.rtf";
+            saveFile1.Filter = "RTF Files|*.rtf";
 
+            if (saveFile1.ShowDialog() == System.Windows.Forms.DialogResult.OK &&
+                 saveFile1.FileName.Length > 0)
+            {
+                // Save the contents of the RichTextBox into the file.
+                MainRichTextBox.SaveFile(saveFile1.FileName);
+            }
         }
 
        
@@ -85,6 +94,8 @@ namespace NotePad_Project
                 NormalToolStripMenuItem5.Enabled = false;
                 StrikeThrowToolStripMenuItem.Enabled = false;
             }
+
+            
         }
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -105,11 +116,16 @@ namespace NotePad_Project
 
         private void  PrintPriviewToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-
+            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                printDocument1.Print();
         }
 
         private void PrintToolStripMenuItem3_Click(object sender, EventArgs e)
         {
+            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+             printDocument1.Print();
+
+            
 
         }
 
@@ -125,9 +141,12 @@ namespace NotePad_Project
 
         private void OpenNewToolStripMenuItem_Click(object sender, EventArgs e)
         {
+         
+            openFileDialog1.ShowDialog();
 
         }
-
+        
+        
         // This is Function for the undo
         private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -209,6 +228,26 @@ namespace NotePad_Project
                 MainRichTextBox.SelectionColor = colorDialog1.Color;
             }
 
+        }
+
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFile1 = new SaveFileDialog();
+            saveFile1.DefaultExt = "*.rtf";
+            saveFile1.Filter = "RTF Files|*.rtf";
+
+            if (saveFile1.ShowDialog() == System.Windows.Forms.DialogResult.OK &&
+                 saveFile1.FileName.Length > 0)
+            {
+                // Save the contents of the RichTextBox into the file.
+                MainRichTextBox.SaveFile(saveFile1.FileName);
+            }
+
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            e.Graphics.DrawString(MainMenuStrip.Text, new Font("Times New Roman",14,FontStyle.Regular),Brushes.Black, new Point(100,100));
         }
     }
 }
